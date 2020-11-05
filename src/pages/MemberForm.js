@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, InputAdornment } from "@material-ui/core";
 import { useForm, Form } from "../components/useForm";
 import Controls from "../components/controls/Controls";
+import * as memberService from "../services/memberService";
 
 const genderItems = [
   { id: "male", title: "Male" },
@@ -15,10 +16,10 @@ const initialValues = {
   code: 0,
   mobile: "",
   gender: "male",
-  memberType: "tenant",
+  memberType: "",
   nid: "",
   district: "",
-  bloodGroup: "a_pos",
+  bloodGroup: "",
   occupation: "",
   address: "",
 };
@@ -46,60 +47,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "15px",
   },
 }));
-
-const memberTypes = [
-  {
-    value: "building_owner",
-    label: "Building Owner",
-  },
-  {
-    value: "flat_owner",
-    label: "Flat Owner",
-  },
-  {
-    value: "organization",
-    label: "Organization",
-  },
-  {
-    value: "tenant",
-    label: "Tenant",
-  },
-];
-
-const bloodGroups = [
-  {
-    value: "a_pos",
-    label: "A+",
-  },
-  {
-    value: "o_pos",
-    label: "O +",
-  },
-  {
-    value: "b_pos",
-    label: "B+",
-  },
-  {
-    value: "ab_pos",
-    label: "AB+",
-  },
-  {
-    value: "a_neg",
-    label: "A-",
-  },
-  {
-    value: "o_neg",
-    label: "O-",
-  },
-  {
-    value: "b_neg",
-    label: "B-",
-  },
-  {
-    value: "ab_neg",
-    label: "AB-",
-  },
-];
 
 const MemberForm = () => {
   const classes = useStyles();
@@ -158,6 +105,13 @@ const MemberForm = () => {
                 value={values.nid}
                 onChange={handleInputChange}
               />
+              <Controls.Select
+                name="bloodGroup"
+                label="Blood Group"
+                value={values.bloodGroup}
+                onChange={handleInputChange}
+                options={memberService.getBloodGroup()}
+              />
             </Grid>
             <Grid item xs={4}>
               <Controls.RadioGroup
@@ -166,6 +120,13 @@ const MemberForm = () => {
                 value={values.gender}
                 onChange={handleInputChange}
                 items={genderItems}
+              />
+              <Controls.Select
+                name="memberType"
+                label="Member Type"
+                value={values.memberType}
+                onChange={handleInputChange}
+                options={memberService.getMemberType()}
               />
             </Grid>
           </Grid>
