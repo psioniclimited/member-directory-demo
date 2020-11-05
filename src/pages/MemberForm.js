@@ -1,21 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Grid,
-  TextField,
-  Typography,
-  InputAdornment,
-  RadioGroup,
-  Radio,
-  FormControlLabel,
-} from "@material-ui/core";
+import { Grid, Typography, InputAdornment } from "@material-ui/core";
 import { useForm, Form } from "../components/useForm";
-import Controls from '../components/controls/Controls';
+import Controls from "../components/controls/Controls";
 
 const genderItems = [
-  {id: 'male', title: 'Male'},
-  {id: 'female', title: 'Female'}
-]
+  { id: "male", title: "Male" },
+  { id: "female", title: "Female" },
+];
 
 const initialValues = {
   id: 0,
@@ -24,7 +16,7 @@ const initialValues = {
   mobile: "",
   gender: "male",
   memberType: "tenant",
-  nidNumber: "",
+  nid: "",
   district: "",
   bloodGroup: "a_pos",
   occupation: "",
@@ -144,6 +136,12 @@ const MemberForm = () => {
                   ),
                 }}
               />
+              <Controls.Input
+                name="district"
+                label="District"
+                value={values.district}
+                onChange={handleInputChange}
+              />
             </Grid>
             <Grid item xs={4}>
               <Controls.Input
@@ -153,9 +151,22 @@ const MemberForm = () => {
                 onChange={handleInputChange}
                 type="number"
               />
+              <Controls.Input
+                name="nid"
+                label="NID Number"
+                type="number"
+                value={values.nid}
+                onChange={handleInputChange}
+              />
             </Grid>
             <Grid item xs={4}>
-              
+              <Controls.RadioGroup
+                name="gender"
+                label="Gender"
+                value={values.gender}
+                onChange={handleInputChange}
+                items={genderItems}
+              />
             </Grid>
           </Grid>
         </Form>
