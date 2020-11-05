@@ -18,10 +18,10 @@ const initialValues = {
   gender: "male",
   memberType: "",
   nid: "",
+  dob: new Date(),
   district: "",
   bloodGroup: "",
-  occupation: "",
-  address: "",
+  isActive: true,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -83,6 +83,12 @@ const MemberForm = () => {
                   ),
                 }}
               />
+              <Controls.DatePicker
+                name="dob"
+                label="Date of Birth"
+                value={values.dob}
+                onChange={handleInputChange}
+              />
               <Controls.Input
                 name="district"
                 label="District"
@@ -127,6 +133,12 @@ const MemberForm = () => {
                 value={values.memberType}
                 onChange={handleInputChange}
                 options={memberService.getMemberType()}
+              />
+              <Controls.Checkbox
+                name="isActive"
+                label="Active Member"
+                value={values.isActive}
+                onChange={handleInputChange}
               />
             </Grid>
           </Grid>
