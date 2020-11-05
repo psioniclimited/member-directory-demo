@@ -9,6 +9,27 @@ import {
   Radio,
   FormControlLabel,
 } from "@material-ui/core";
+import { useForm, Form } from "../components/useForm";
+import Controls from '../components/controls/Controls';
+
+const genderItems = [
+  {id: 'male', title: 'Male'},
+  {id: 'female', title: 'Female'}
+]
+
+const initialValues = {
+  id: 0,
+  fullName: "",
+  code: 0,
+  mobile: "",
+  gender: "male",
+  memberType: "tenant",
+  nidNumber: "",
+  district: "",
+  bloodGroup: "a_pos",
+  occupation: "",
+  address: "",
+};
 
 const useStyles = makeStyles((theme) => ({
   memberWrapper: {
@@ -90,21 +111,7 @@ const bloodGroups = [
 
 const MemberForm = () => {
   const classes = useStyles();
-  const [memberType, setMemberTypes] = useState("building_owner");
-  const [bloodGroup, setBloodGroups] = useState();
-  const [value, setValue] = React.useState("public");
-
-  const handleMemberChange = (event) => {
-    setMemberTypes(event.target.value);
-  };
-
-  const handleBloodChange = (event) => {
-    setBloodGroups(event.target.value);
-  };
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+  const { values, setValues, handleInputChange } = useForm(initialValues);
 
   return (
     <div className={classes.memberWrapper}>
@@ -113,190 +120,45 @@ const MemberForm = () => {
       </Typography>
       <hr />
       <div className={classes.formWrapper}>
-        <form>
+        <Form>
           <Typography variant="h6" gutterBottom className={classes.memberInfo}>
             Member Info
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={4}>
-              <TextField
-                name="memberName"
-                type="text"
+              <Controls.Input
+                name="fullName"
                 label="Member Name"
-                variant="outlined"
-                size="small"
-                fullWidth
+                value={values.fullName}
+                onChange={handleInputChange}
               />
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                name="memberCode"
+              <Controls.Input
+                name="mobile"
                 type="number"
-                label="Member Code"
-                variant="outlined"
-                size="small"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <Typography variant="h5">Photo</Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                name="memberPhone"
-                type="number"
-                label="Phone Number"
-                variant="outlined"
-                size="small"
+                label="Mobile"
+                value={values.mobile}
+                onChange={handleInputChange}
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position="start">+880</InputAdornment>
+                    <InputAdornment position="start">+88</InputAdornment>
                   ),
                 }}
-                fullWidth
               />
             </Grid>
             <Grid item xs={4}>
-              <TextField
-                id="memberType"
-                select
-                label="Member Type"
-                value={memberType}
-                onChange={handleMemberChange}
-                SelectProps={{
-                  native: true,
-                }}
-                variant="outlined"
-                size="small"
-              >
-                {memberTypes.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
+              <Controls.Input
+                name="code"
+                label="Code"
+                value={values.code}
+                onChange={handleInputChange}
+                type="number"
+              />
             </Grid>
             <Grid item xs={4}>
-              <Typography variant="h5">Photo</Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <TextField
-                name="districtName"
-                type="text"
-                label="District"
-                variant="outlined"
-                size="small"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextField
-                id="bloodGroup"
-                select
-                label="Blood Group"
-                value={bloodGroup}
-                onChange={handleBloodChange}
-                SelectProps={{
-                  native: true,
-                }}
-                variant="outlined"
-                size="small"
-                fullWidth
-              >
-                {bloodGroups.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={5} />
-          </Grid>
-          {/* Occupation Grid */}
-          <Typography variant="h6" gutterBottom className={classes.memberInfo}>
-            Member's Occupation
-          </Typography>
-          <hr />
-          <Grid container>
-            <Grid item xs={4}>
-              <RadioGroup
-                aria-label="gender"
-                name="gender1"
-                value={value}
-                onChange={handleChange}
-              >
-                <FormControlLabel
-                  value="public"
-                  control={<Radio />}
-                  label="Public"
-                />
-                <FormControlLabel
-                  value="Private"
-                  control={<Radio />}
-                  label="Private"
-                />
-                <FormControlLabel
-                  value="other"
-                  control={<Radio />}
-                  label="Other"
-                />
-              </RadioGroup>
-            </Grid>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={4}></Grid>
-          </Grid>
-          {/* Address Grid */}
-          <Typography variant="h6" gutterBottom className={classes.memberInfo}>
-            Member's Address
-          </Typography>
-          <hr />
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                required
-                id="territory"
-                name="territory"
-                label="Territory"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                id="sector"
-                name="sector"
-                label="Sector/Moholla/Village"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={4} />
-            <Grid item xs={12} sm={4}>
-              <TextField
-                required
-                id="road"
-                name="road"
-                label="Road / Residential Area"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                required
-                id="house"
-                name="house"
-                label="House"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                required
-                id="flat"
-                name="flat"
-                label="Flat"
-                fullWidth
-              />
+              
             </Grid>
           </Grid>
-        </form>
+        </Form>
       </div>
     </div>
   );
