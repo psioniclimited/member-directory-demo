@@ -31,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "15px",
     borderRadius: "6px",
   },
-  bloodStyle: {
-    width: "auto",
-  },
   memberTitle: {
     textAlign: "center",
     marginTop: "20px",
@@ -46,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "15px",
     marginTop: "15px",
   },
+  textCenter: {
+    textAlign: "center"
+  }
 }));
 
 const MemberForm = () => {
@@ -140,6 +140,10 @@ const MemberForm = () => {
                 value={values.isActive}
                 onChange={handleInputChange}
               />
+            </Grid>
+            <Grid item xs={12} classes={{ root: classes.textCenter }}>
+              <Controls.Button type="submit" text="Submit" />
+              <Controls.Button type="submit" color="secondary" text="Reset" />
             </Grid>
           </Grid>
         </Form>
