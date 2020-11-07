@@ -80,7 +80,7 @@ const MemberForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validate()) window.alert("Testing.............");
+    if (validate()) memberService.insertMember(values);
   };
 
   return (
