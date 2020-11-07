@@ -44,13 +44,44 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "15px",
   },
   textCenter: {
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 }));
 
 const MemberForm = () => {
   const classes = useStyles();
-  const { values, setValues, handleInputChange } = useForm(initialValues);
+  const validate = (fieldValues = values) => {
+    let temp = { ...errors };
+    if ("fullName" in fieldValues)
+      temp.fullName = fieldValues.fullName ? "" : "This field is required.";
+    // temp.email = /$^|.+@.+..+/.test(values.email) ? "" : "Email is not valid.";
+    if ("mobile" in fieldValues)
+      temp.mobile =
+        fieldValues.mobile.length == 11 ? "" : "Invalid Phone Number";
+    if ("memberType" in fieldValues)
+      temp.memberType =
+        fieldValues.memberType.length != 0 ? "" : "This field is required.";
+
+    setErrors({
+      ...temp,
+    });
+
+    if (fieldValues == values) return Object.values(temp).every((x) => x == "");
+  };
+
+  const {
+    values,
+    setValues,
+    errors,
+    setErrors,
+    handleInputChange,
+    resetForm,
+  } = useForm(initialValues, true, validate);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) window.alert("Testing.............");
+  };
 
   return (
     <div className={classes.memberWrapper}>
@@ -59,7 +90,7 @@ const MemberForm = () => {
       </Typography>
       <hr />
       <div className={classes.formWrapper}>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Typography variant="h6" gutterBottom className={classes.memberInfo}>
             Member Info
           </Typography>
@@ -70,6 +101,7 @@ const MemberForm = () => {
                 label="Member Name"
                 value={values.fullName}
                 onChange={handleInputChange}
+                error={errors.fullName}
               />
               <Controls.Input
                 name="mobile"
@@ -82,6 +114,7 @@ const MemberForm = () => {
                     <InputAdornment position="start">+88</InputAdornment>
                   ),
                 }}
+                error={errors.mobile}
               />
               <Controls.DatePicker
                 name="dob"
@@ -133,6 +166,7 @@ const MemberForm = () => {
                 value={values.memberType}
                 onChange={handleInputChange}
                 options={memberService.getMemberType()}
+                error={errors.memberType}
               />
               <Controls.Checkbox
                 name="isActive"
@@ -143,7 +177,11 @@ const MemberForm = () => {
             </Grid>
             <Grid item xs={12} classes={{ root: classes.textCenter }}>
               <Controls.Button type="submit" text="Submit" />
-              <Controls.Button type="submit" color="secondary" text="Reset" />
+              <Controls.Button
+                color="default"
+                text="Reset"
+                onClick={resetForm}
+              />
             </Grid>
           </Grid>
         </Form>
