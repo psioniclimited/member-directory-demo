@@ -22,6 +22,9 @@ const initialValues = {
   district: "",
   bloodGroup: "",
   isActive: true,
+  occupation: "",
+  companyName: "",
+  jobDesignation: "",
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -175,14 +178,86 @@ const MemberForm = () => {
                 onChange={handleInputChange}
               />
             </Grid>
-            <Grid item xs={12} classes={{ root: classes.textCenter }}>
-              <Controls.Button type="submit" text="Submit" />
-              <Controls.Button
-                color="default"
-                text="Reset"
-                onClick={resetForm}
+          </Grid>
+          <Typography variant="h6" gutterBottom className={classes.memberInfo}>
+            Member Occupation
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <Controls.Input
+                name="occupation"
+                label="Occupation"
+                value={values.occupation}
+                onChange={handleInputChange}
+                error={errors.occupation}
+              />
+              <Controls.Input
+                name="jobDesignation"
+                label="Designation"
+                value={values.jobDesignation}
+                onChange={handleInputChange}
+                error={errors.jobDesignation}
               />
             </Grid>
+            <Grid item xs={6}>
+              <Controls.Input
+                name="companyName"
+                label="Organization Name"
+                value={values.companyName}
+                onChange={handleInputChange}
+                error={errors.companyName}
+              />
+            </Grid>
+          </Grid>
+          <Typography variant="h6" gutterBottom className={classes.memberInfo}>
+            Member Address
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={4}>
+              <Controls.Input
+                name="territory"
+                label="Area Name"
+                value={values.territory}
+                onChange={handleInputChange}
+                error={errors.territory}
+              />
+              <Controls.Input
+                name="house"
+                label="House No."
+                value={values.house}
+                onChange={handleInputChange}
+                error={errors.house}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <Controls.Input
+                name="sector"
+                label="Sector/Moholla/Village"
+                value={values.sector}
+                onChange={handleInputChange}
+                error={errors.sector}
+              />
+              <Controls.Input
+                name="flat"
+                label="Flat No."
+                value={values.flat}
+                onChange={handleInputChange}
+                error={errors.flat}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <Controls.Input
+                name="road"
+                label="Road/Residential area"
+                value={values.road}
+                onChange={handleInputChange}
+                error={errors.road}
+              />
+            </Grid>
+          </Grid>
+          <Grid xs={12} classes={{ root: classes.textCenter }}>
+            <Controls.Button type="submit" text="Submit" />
+            <Controls.Button color="default" text="Reset" onClick={resetForm} />
           </Grid>
         </Form>
       </div>
