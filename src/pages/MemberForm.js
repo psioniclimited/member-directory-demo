@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, InputAdornment } from "@material-ui/core";
+import { Grid, Typography, InputAdornment, TextField } from "@material-ui/core";
 import { useForm, Form } from "../components/useForm";
 import Controls from "../components/controls/Controls";
 import * as memberService from "../services/memberService";
@@ -25,6 +25,12 @@ const initialValues = {
   occupation: "",
   companyName: "",
   jobDesignation: "",
+  territory: "",
+  house: "",
+  sector: "",
+  flat: "",
+  road: "",
+  remark: "",
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -252,6 +258,19 @@ const MemberForm = () => {
                 value={values.road}
                 onChange={handleInputChange}
                 error={errors.road}
+              />
+            </Grid>
+            <Grid item xs={5}>
+              <TextField
+                name="remark"
+                label="Remark"
+                multiline
+                rows={4}
+                variant="outlined"
+                fullWidth
+                value={values.remark}
+                onChange={handleInputChange}
+                error={errors.remark}
               />
             </Grid>
           </Grid>
