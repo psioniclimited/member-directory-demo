@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const headCells = [
   { id: "fullName", label: "Member Name" },
   { id: "memberType", label: "Member Type" },
-  { id: "mobile", label: "Mobile" },
+  { id: "mobile", label: "Mobile", disableSorting: true },
 ];
 
 export default function Members() {
