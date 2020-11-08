@@ -10,6 +10,7 @@ export default function Input(props) {
     InputProps,
     error = null,
     onChange,
+    ...other
   } = props;
 
   return (
@@ -23,6 +24,7 @@ export default function Input(props) {
       InputProps={InputProps}
       fullWidth
       onChange={onChange}
+      {...other}
       {...(error && { error: true, helperText: error })}
     />
   );
