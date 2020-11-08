@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import MemberForm from "./MemberForm";
+import MemberForm from "./MemberForm";
 import PeopleOutlineTwoToneIcon from "@material-ui/icons/PeopleOutlineTwoTone";
 import {
   Paper,
@@ -29,7 +29,12 @@ export default function Members() {
   const classes = useStyles();
   const [records, setRecords] = useState(memberService.getAllMembers());
 
-  const { TblContainer, TblHeader } = useTable(records, headCells);
+  const {
+    TblContainer,
+    TblHeader,
+    TblPagination,
+    recordsAfterPaginatingAndSorting,
+  } = useTable(records, headCells);
 
   return (
     <>
@@ -43,7 +48,7 @@ export default function Members() {
         <TblContainer>
           <TblHeader />
           <TableBody>
-            {records.map((item) => (
+            {recordsAfterPaginatingAndSorting().map((item) => (
               <TableRow key={item.id}>
                 <TableCell>{item.fullName}</TableCell>
                 <TableCell>{item.memberType}</TableCell>
@@ -52,6 +57,7 @@ export default function Members() {
             ))}
           </TableBody>
         </TblContainer>
+        <TblPagination />
       </Paper>
     </>
   );
