@@ -27,13 +27,14 @@
 .nav-menu.active {
   left: 0;
   transition: 350ms;
+  z-index: 99999;
 }
 
 .nav-text {
   display: flex;
   justify-content: start;
   align-items: center;
-  padding: 8px 0px 8px 16px;
+  padding: 8px 0px 8px 8px;
   list-style: none;
   height: 60px;
 }
@@ -50,12 +51,18 @@
   border-radius: 4px;
 }
 
+.nav-text a span{
+  margin-left: 16px;
+}
+
 .nav-text a:hover {
   background-color: #1a83ff;
 }
 
 .nav-menu-items {
   width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .navbar-toggle {
@@ -67,6 +74,6 @@
   align-items: center;
 }
 
-span {
+/* span {
   margin-left: 16px;
-}
+} */
