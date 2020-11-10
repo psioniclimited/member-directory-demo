@@ -5,8 +5,11 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 import "./App.css";
-import SideMenu from "./components/SideMenu";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Navbar from './components/Navbar';
+import MemberForm from './pages/MemberForm';
 import Members from "./pages/Members";
+import Currency from './pages/Currency';
 
 const theme = createMuiTheme({
   palette: {
@@ -38,7 +41,7 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles({
   appMain: {
-    // paddingLeft: "320px",
+    paddingLeft: "320px",
     width: "100%",
   },
 });
@@ -48,11 +51,19 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route path='/members' exact component={Members} />
+          <Route path='/new_member' component={MemberForm} />
+          <Route path='/currency' component={Currency} />
+        </Switch>
+      </Router>
       {/* <SideMenu /> */}
-      <div className={classes.appMain}>
+      {/* <div className={classes.appMain}>
         <Members />
       </div>
-      <CssBaseline />
+      <CssBaseline /> */}
     </ThemeProvider>
   );
 }
