@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import CoinService from "../services/CoinService";
 
 export default function Currency() {
   const [coins, setCoins] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     axios
@@ -14,7 +16,42 @@ export default function Currency() {
         console.log(res.data);
       })
       .catch((error) => console.log(error));
-  });
+  }, []);
 
-  return <div>Currency Tracker</div>;
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const filteredCoins = coins.filter(coin =>
+    coin.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="coin-app">
+      <div className="coin-search">
+        <h1 className="coin-text">Search a currency</h1>
+        <form>
+          <input
+            type="text"
+            placeholder="Search"
+            className="coin-input"
+            onChange={handleChange}
+          />
+        </form>
+      </div>
+      {filteredCoins.map((coin) => {
+        return (
+          <CoinService
+            key={coin.id}
+            name={coin.name}
+            image={coin.image}
+            symbol={coin.symbol}
+            price={coin.current_price}
+            volume={coin.market_cap}
+            priceChange={coin.price_change_percentage_24h}
+          />
+        );
+      })}
+    </div>
+  );
 }
