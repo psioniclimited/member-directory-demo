@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import MemberForm from "./MemberForm";
 import PeopleOutlineTwoToneIcon from "@material-ui/icons/PeopleOutlineTwoTone";
 import {
   Paper,
@@ -8,8 +7,7 @@ import {
   TableRow,
   TableCell,
   Toolbar,
-  InputAdornment,
-  ListItemSecondaryAction,
+  InputAdornment
 } from "@material-ui/core";
 import PageHeader from "../components/PageHeader";
 import useTable from "../components/useTable";
