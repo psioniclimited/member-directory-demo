@@ -58,17 +58,17 @@ export const getBloodGroup = () => [
 ];
 
 export function insertMember(data) {
-  let members=getAllMembers();
-  data['id'] = generateMemberId()
-  members.push(data)
-  localStorage.setItem(KEYS.members,JSON.stringify(members))
+  let members = getAllMembers();
+  data["id"] = generateMemberId();
+  members.push(data);
+  localStorage.setItem(KEYS.members, JSON.stringify(members));
 }
 
 export function generateMemberId() {
   if (localStorage.getItem(KEYS.memberId) == null)
-      localStorage.setItem(KEYS.memberId, '0')
-  var id = parseInt(localStorage.getItem(KEYS.memberId))
-  localStorage.setItem(KEYS.memberId, (++id).toString())
+    localStorage.setItem(KEYS.memberId, "0");
+  var id = parseInt(localStorage.getItem(KEYS.memberId));
+  localStorage.setItem(KEYS.memberId, (++id).toString());
   return id;
 }
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Controls from "../components/controls/Controls";
 import {
   Paper,
@@ -12,6 +11,7 @@ import {
 } from "@material-ui/core";
 import useTable from "../components/useTable";
 import { Search } from "@material-ui/icons";
+import { getCoins } from "../services/CoinService";
 
 const headCells = [
   { id: "image", label: "Image", disableSorting: true },
@@ -31,15 +31,7 @@ export default function Currency() {
   });
 
   useEffect(() => {
-    axios
-      .get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1&sparkline=false"
-      )
-      .then((res) => {
-        setRecords(res.data);
-        console.log(res.data);
-      })
-      .catch((error) => console.log(error));
+    getCoins().then((data) => setRecords(data));
   }, []);
 
   const {
@@ -54,7 +46,10 @@ export default function Currency() {
     setFilterFn({
       fn: (items) => {
         if (target.values == "") return items;
-        else return items.filter((x) => x.name.toLowerCase().includes(target.value.toLowerCase()));
+        else
+          return items.filter((x) =>
+            x.name.toLowerCase().includes(target.value.toLowerCase())
+          );
       },
     });
   };

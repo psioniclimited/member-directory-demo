@@ -1,27 +1,12 @@
-import React from "react";
-import { FaPercent } from "react-icons/fa";
+import axios from "axios";
 
-const CoinService = ({ name, image, symbol, price, volume, priceChange }) => {
-  return (
-    <div className="coin-container">
-      <div className="coin-row">
-        <div className="coin">
-          <img src={image} alt="crypto" />
-          <h1>{name}</h1>
-          <p className="coin-symbol">{symbol}</p>
-        </div>
-        <div className="coin-data">
-          <p>${price}</p>
-          <p>${volume.toLocaleString()}</p>
-          {priceChange < 0 ? (
-            <p className="coin-percent red">{priceChange.toFixed(2)}%</p>
-          ) : (
-            <p className="coin-percent green">{priceChange.toFixed(2)}%</p>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+export const getCoins = async () => {
+  const response = axios
+    .get(
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1&sparkline=false"
+    )
+    .then(({ data }) => data)
+    .catch((error) => console.log(error));
+
+  return response;
 };
-
-export default CoinService;
