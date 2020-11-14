@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import CoinService from "../services/CoinService";
 import Controls from "../components/controls/Controls";
 import {
   Paper,
@@ -15,18 +14,16 @@ import useTable from "../components/useTable";
 import { Search } from "@material-ui/icons";
 
 const headCells = [
-  { id: "id", label: "#" },
-  { id: "image", label: "Image" },
-  { id: "name", label: "Name" },
-  { id: "symbol", label: "Symbol" },
+  { id: "image", label: "Image", disableSorting: true },
+  { id: "name", label: "Name", disableSorting: true },
+  { id: "symbol", label: "Symbol", disableSorting: true },
   { id: "current_price", label: "Current Price" },
   { id: "market_cap", label: "Market Capital" },
   { id: "price_change_percentage_24h", label: "Percentage" },
 ];
 
 export default function Currency() {
-  const [coins, setCoins] = useState([]);
-  const [search, setSearch] = useState("");
+  const [records, setRecords] = useState([]);
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
       return items;
@@ -39,7 +36,7 @@ export default function Currency() {
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1&sparkline=false"
       )
       .then((res) => {
-        setCoins(res.data);
+        setRecords(res.data);
         console.log(res.data);
       })
       .catch((error) => console.log(error));
@@ -50,57 +47,23 @@ export default function Currency() {
     TblHeader,
     TblPagination,
     recordsAfterPaginatingAndSorting,
-  } = useTable(coins, headCells, filterFn);
+  } = useTable(records, headCells, filterFn);
 
   const handleSearch = (e) => {
     let target = e.target;
     setFilterFn({
       fn: (items) => {
         if (target.values == "") return items;
-        else return items.filter((x) => x.fullName.includes(target.value));
+        else return items.filter((x) => x.name.toLowerCase().includes(target.value.toLowerCase()));
       },
     });
   };
 
-  // const handleChange = (e) => {
-  //   setSearch(e.target.value);
-  // };
-
-  // const filteredCoins = coins.filter(coin =>
-  //   coin.name.toLowerCase().includes(search.toLowerCase())
-  // );
-
   return (
-    // <div className="coin-app">
-    //   <div className="coin-search">
-    //     <h1 className="coin-text">Search a currency</h1>
-    //     <form>
-    //       <input
-    //         type="text"
-    //         placeholder="Search"
-    //         className="coin-input"
-    //         onChange={handleChange}
-    //       />
-    //     </form>
-    //   </div>
-    //   {filteredCoins.map((coin) => {
-    //     return (
-    //       <CoinService
-    //         key={coin.id}
-    //         name={coin.name}
-    //         image={coin.image}
-    //         symbol={coin.symbol}
-    //         price={coin.current_price}
-    //         volume={coin.market_cap}
-    //         priceChange={coin.price_change_percentage_24h}
-    //       />
-    //     );
-    //   })}
-    // </div>
     <Paper>
       <Toolbar>
         <Controls.Input
-          label="Search Member"
+          label="Search Coin"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -116,9 +79,14 @@ export default function Currency() {
         <TableBody>
           {recordsAfterPaginatingAndSorting().map((item) => (
             <TableRow key={item.id}>
+              <TableCell>
+                <img src={item.image} alt="crypto" />
+              </TableCell>
               <TableCell>{item.name}</TableCell>
               <TableCell>{item.symbol}</TableCell>
               <TableCell>{item.current_price}</TableCell>
+              <TableCell>{item.market_cap}</TableCell>
+              <TableCell>{item.price_change_percentage_24h}</TableCell>
             </TableRow>
           ))}
         </TableBody>
