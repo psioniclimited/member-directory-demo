@@ -16,6 +16,7 @@ import Controls from "../components/controls/Controls";
 import { Search } from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
 import Popup from "../components/Popup";
+import MemberForm from "../pages/MemberForm";
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {
@@ -67,7 +68,7 @@ export default function Members() {
   return (
     <>
       <PageHeader
-        title="New Member"
+        title="Member List"
         subTitle=""
         icon={<PeopleOutlineTwoToneIcon fontSize="large" />}
       />
@@ -110,7 +111,13 @@ export default function Members() {
         </TblContainer>
         <TblPagination />
       </Paper>
-      <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}></Popup>
+      <Popup
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+        title="Memeber Form"
+      >
+        <MemberForm />
+      </Popup>
     </>
   );
 }
