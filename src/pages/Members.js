@@ -7,18 +7,27 @@ import {
   TableRow,
   TableCell,
   Toolbar,
-  InputAdornment
+  InputAdornment,
 } from "@material-ui/core";
 import PageHeader from "../components/PageHeader";
 import useTable from "../components/useTable";
 import * as memberService from "../services/memberService";
 import Controls from "../components/controls/Controls";
 import { Search } from "@material-ui/icons";
+import AddIcon from "@material-ui/icons/Add";
+import Popup from "../components/Popup";
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {
     margin: theme.spacing(5),
     padding: theme.spacing(3),
+  },
+  searchInput: {
+    width: "75%",
+  },
+  newButton: {
+    position: "absolute",
+    right: "10px",
   },
 }));
 
@@ -36,6 +45,7 @@ export default function Members() {
       return items;
     },
   });
+  const [openPopup, setOpenPopup] = useState(false);
 
   const {
     TblContainer,
@@ -48,12 +58,12 @@ export default function Members() {
     let target = e.target;
     setFilterFn({
       fn: (items) => {
-        if (target.values == "") return items;
+        if (target.values === "") return items;
         else return items.filter((x) => x.fullName.includes(target.value));
       },
     });
   };
-  
+
   return (
     <>
       <PageHeader
@@ -74,6 +84,16 @@ export default function Members() {
               ),
             }}
             onChange={handleSearch}
+            className={classes.searchInput}
+          />
+          <Controls.Button
+            text="Add New"
+            variant="outlined"
+            startIcon={<AddIcon />}
+            className={classes.newButton}
+            onClick={() => {
+              setOpenPopup(true);
+            }}
           />
         </Toolbar>
         <TblContainer>
@@ -90,6 +110,7 @@ export default function Members() {
         </TblContainer>
         <TblPagination />
       </Paper>
+      <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}></Popup>
     </>
   );
 }
