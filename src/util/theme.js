@@ -1,16 +1,12 @@
 export default {
   palette: {
     primary: {
-      light: "#b47cff",
-      main: "#7c4dff",
-      dark: "#3f1dcb",
-      contrastText: "#fff",
+      main: "#333996",
+      light: "#3c44b126",
     },
     secondary: {
-      light: "#ff5983",
-      main: "#f50057",
-      dark: "#bb002f",
-      contrastText: "#fff",
+      main: "#f83245",
+      light: "#f8324526",
     },
     background: {
       default: "#f4f5fd",
